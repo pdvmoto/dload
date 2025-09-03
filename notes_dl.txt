@@ -1,0 +1,42 @@
+
+purpose: test direct load, indexing, speed, segment-growth.
+
+1. table + insert-append
+2. sqlldr
+3. python
+
+
+typical test data should have fields:
+ - id (generate)
+ - uuid (external..)
+ - created_dt (generated if null)
+ - inserted_dt (generated on insert)
+ - parent_id (integer)
+ - label (varchar-ref, create one if needed)
+ - name  short text, max 32, upper
+ - desc text, max 128
+ - payload varchar
+ - comment_text.. free-enterable
+
+indexes on: (test invalid indexes)
+ - id
+ - created + id
+ - name, id (as unique constraint)
+ - parent + id
+ - label
+
+then test loading at speed:
+ - insert
+ - insert-append
+ - sqlldr from csv-file
+ - sqlldr from csv-file - direct
+ - python form csv
+ - python from csv-direct
+
+measurements: 
+ - record Effort, more then elapsed-time
+ - storage
+
+findings: 
+ - sqlldr direct=true : add blocks to table.. 
+ - sql : insert /*+ APPEND */ seems to not add blocks
