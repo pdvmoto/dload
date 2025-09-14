@@ -15,9 +15,14 @@ set echo on
 set feedback on
 
 create table tst_load ( 
-  name varchar2(32)
-, payload varchar(128)
-);
+  name        varchar2(32)
+, par_id      number 
+, payload     varchar(128)
+) ;
+-- if needed: storage ( initial 16K next 16K) ;
+
+-- alter table tst_load add constraint tst_load_pk primary key ( name ) ; 
+
 
 create table tst_source (
   id          number generated always as identity not null primary key
@@ -37,6 +42,9 @@ create table tst_parent (
 , constraint tst_parent_fk_src foreign key ( src_id ) references tst_source ( id ) 
 -- consider name unique
 );
+
+alter table tst_load add constraint tst_load_fk_par 
+foreign key ( par_id ) references tst_parent ( id )  ; 
 
 create table tst_item ( 
   id          number generated always as identity not null primary key

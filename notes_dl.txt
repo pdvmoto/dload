@@ -6,7 +6,7 @@ purpose: test direct load, indexing, speed, segment-growth.
 3. python
 
 
-typical test data should have fields:
+typical test data would have fields:
  - id (generate)
  - uuid (external..)
  - created_dt (generated if null)
@@ -18,12 +18,18 @@ typical test data should have fields:
  - payload varchar
  - comment_text.. free-enterable
 
+problems: 
+ - generated + dflt fields cancel out Direct-load
+
 indexes on: (test invalid indexes)
  - id
  - created + id
  - name, id (as unique constraint)
  - parent + id
  - label
+
+Take note;
+ - defult columns do not work.. avoid ID and created_dt
 
 then test loading at speed:
  - insert

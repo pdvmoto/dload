@@ -1,0 +1,18 @@
+
+stmnts used to find ASH
+
+select ash.session_id, ash.session_serial#
+, ash.sample_time, ash.sample_id, ash.user_id
+, ash.sql_id, ash.top_level_sql_id, ash.session_state, ash.event
+, (select max ( sql_text ) from v$sql s where s.sql_id = ash.sql_id ) as sql_text
+, ash.* 
+from v$active_session_history ash 
+where session_id in ( 196, 200 )
+order by ash.sample_time desc ;
+
+select s.sql_id, s.sql_text, s.* 
+from v$sql s
+where s.sql_text like '%sleepf%';
+
+select max (sample_time), min ( sample_time ) from  v$active_session_history ash ; 
+
